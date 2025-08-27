@@ -119,3 +119,23 @@ button.ghost{
   border: 1px solid #203357;
   margin-left: .25rem;
 }
+
+.rowy{
+  display: flex;  
+  flex-direction: row;
+  justify-content: space-between; 
+  gap: 30vw;            
+}
+.left{
+ display: flex;
+  align-self: left;
+
+}
+.center{
+  display: flex;
+ align-self: center;
+}
+.right{
+ display: flex;
+ align-self: right;
+}
