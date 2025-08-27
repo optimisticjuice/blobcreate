@@ -1,0 +1,121 @@
+html{
+  font-size: 62.5%;
+}
+
+.app{
+  /* 📦 turn the viewport into a flexbox to center your app column */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;      /* column flow for stacked sections */
+  align-items: center;         /* horizontal centering */
+  justify-content: flex-start; /* push from top; change to center if you want perfect centering */
+  gap: 1.25rem;                /* vertical rhythm between sections */
+  padding: 2rem;
+  /* 🎨 Linear gradient background with a subtle color transition */
+  /* The first color is #6ca323 and the second color is #5b6db8 */
+  /* The transition is done from the top (180deg) to the bottom (0deg) */
+  /* The colors help create a subtle wave effect and can be customized */
+  /* The color #e5e7eb is a light gray used for text on top of the gradient */
+  background: linear-gradient(180deg,#6ca323,#5b6db8);
+  color: #e5e7eb;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+}
+
+/* Header */
+.header{
+  text-align: center;
+}
+
+/* Sections styled as "cards" using flex rows */
+.card{
+  background: #350023;
+  border: 1px solid #235192;
+  border-radius: 2rem;
+  padding: 1rem 1.25rem;
+  width: min(900px, 95vw);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Row = horizontal flex container */
+.row{
+  display: flex;               /* 🧭 main flex container */
+  align-items: center;         /* cross-axis alignment */
+  justify-content: space-between;  /* put left/right at ends */
+  gap: 1rem;                   /* spacing between children */
+}
+
+/* Stacks on small screens */
+@media (max-width: 640px){
+  .stack-sm{
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Row parts */
+.row-left, .row-right{
+  display: flex;               /* each side can also be a flex container */
+  align-items: center;
+  gap: .75rem;
+}
+
+/* Buttons cluster */
+.btn-group{
+  display: flex;
+  gap: .5rem;                  /* 🔌 gapped inline controls */
+  flex-wrap: wrap;             /* wrap on small widths */
+}
+
+/* Buttons */
+button{
+  background: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  padding: .6rem .9rem;
+  border-radius: .8rem;
+  cursor: pointer;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+}
+button:hover{ background: #243048; border-color:#4b5563; transform: translateY(-1px); }
+button:active{ transform: translateY(0); }
+
+button.primary{
+  background: #334155;
+  border-color: #475569;
+}
+button.primary:hover{ background:#3b4a63; }
+
+button.ghost{
+  background: transparent;
+  border-color: #334155;
+}
+
+/* Pretty count */
+.counter{
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+/* Value pill */
+.number-pill{
+  min-width: 3rem;
+  text-align: center;
+  background: #0b1224;
+  border: 1px solid #26304a;
+  border-radius: 999px;
+  padding: .4rem .8rem;
+  font-weight: 700;
+}
+
+/* Letter badge */
+.badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  background: #0f1b34;
+  border: 1px solid #203357;
+  margin-left: .25rem;
+}
