@@ -2,29 +2,26 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 function App() {
-  // ✅ keep this a single string since we render one random word
-  const [word, setWord] = useState("");              // <state> source of truth for the generated word
+  const [word, setWord] = useState("");
   const [count, setCount] = useState(0);
   const [value, setValue] = useState(1);
   const [letter, setLetter] = useState("A");
   const [countLetter, setCountLetter] = useState("A");
   const [flip, setFlip] = useState(true);
+  const [myArray, setMyArray] = useState(["", "", ""]);
 
   useEffect(() => {
-    // 🔁 re-compute a random header letter whenever `value` changes
     const randomNumber = Math.floor(Math.random() * 26);
     const randomLetter = String.fromCharCode(65 + randomNumber); // 65 => 'A'
     setLetter(randomLetter);
   }, [value]);
 
   useEffect(() => {
-    // 🔁 re-compute a random header letter whenever `count` changes
     const randomNumber = Math.floor(Math.random() * 26);
     const randomCountLetter = String.fromCharCode(65 + randomNumber);
     setCountLetter(randomCountLetter);
   }, [count]);
 
-  // 🔨 pure function: build a 5-letter random word (uppercase to match color switch)
   const buildRandomWord = () => {
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";      // use uppercase to match switch cases
     let next = "";                                      // local var (NOT state) → no direct mutation
@@ -35,13 +32,11 @@ function App() {
     return next;                                        // return the completed word (pure)
   };
 
-  // 🧠 event handler: generate + commit into state
   const generateWord = () => {
     const next = buildRandomWord(); // compute
     setWord(next);                  // commit to state → triggers re-render
   };
 
-  // 🎨 maps letters-in-word → color token; guards + normalization included
   const colorCorrelate = (w) => {
     // 🚧 guard: if nothing passed (undefined/empty), return a neutral color
     if (!w || typeof w !== "string") return "black";
@@ -72,23 +67,23 @@ function App() {
     }
   };
 
-  // 🖨️ safe log: pass the current word in state
+  const switchToCenter = () => {
+    setMyArray(["", "0", ""]);
+  }
+  const switchToLeft = () => {
+    setMyArray(["0", "", ""]);
+  }
+  const switchToRight = () => {
+    setMyArray(["", "", "0"]);
+  }
 
   return (
-    
-    <div className="app"> {/* 🎯 Flex container to center the whole app */}
+    <div className="app">
       <header className="header">
         <h1>Random Letter of the Header {countLetter}</h1>
       </header>
-
-      {/* 🔢 Count controls row */}
-      {/* 🔢 Row to display the count and the control buttons with two words */}
       <section className="row card">
-        {/* 📦 The row is displayed as a flex container with two columns */}
-        {/* The first column contains the count and the buttons */}
-        {/* The second column contains the second word */}
         <div className="row-left">
-          {/* 🧭 cluster buttons using flex with gaps */}
           <div className="btn-group">
             <button onClick={() => (flip ? setCount(count + value) : setCount(count - value))}>
               {flip ? "Increment" : "Decrement"}
@@ -102,8 +97,6 @@ function App() {
           <h3 className="counter">{count}</h3>
         </div>
       </section>
-
-      {/* 🎚️ Value controls row */}
       <section className="row card">
         <div className="row-left">
           <div className="btn-group">
@@ -117,8 +110,6 @@ function App() {
         </div>
         <div className="row-right number-pill">{value}</div>
       </section>
-
-      {/* 🔤 Current letter & random word controls in a responsive flex row */}
       <section className="row card stack-sm">
         <div className="row-left">
           <h3>Current Letter: <span className="badge">{letter}</span></h3>
@@ -128,15 +119,35 @@ function App() {
             onDoubleClick={generateWord}
             onClick={() => setWord("")}
             className="primary"
-            style={{ color: colorCorrelate(word) }} // 🎨 dynamic color via state
+            style={{ color: colorCorrelate(word) }}
           >
             Random Word: {word || "—"}
           </button>
           <button className="ghost" onClick={() => setFlip(!flip)}>Flip</button>
         </div>
       </section>
+      <section style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "24px", alignItems: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "20px" }}>
+            {
+              myArray.map((item, index) => (
+                <div key={index} style={{ backgroundColor: item === "0" ? "red" : "grey", borderRadius: "50%", minHeight: "10px", minWidth: "10px" }}></div>
+              ))
+            }
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <div style={{ backgroundColor: "blue", height: "2px", width: "20px" }}></div>
+            <div style={{ backgroundColor: "black", height: "2px", width: "20px" }}></div>
+            <div style={{ backgroundColor: "yellow", height: "2px", width: "20px" }}></div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: "8px", marginTop: "24px" }}>
+          <button onClick={switchToLeft}>Left</button>
+          <button onClick={switchToCenter}>Center</button>
+          <button onClick={switchToRight}>Right</button>
+        </div>
+      </section>
     </div>
-  
   );
 }
 
