@@ -9,6 +9,7 @@ function App() {
   const [countLetter, setCountLetter] = useState("A");
   const [flip, setFlip] = useState(true);
   const [myArray, setMyArray] = useState(["", "", ""]);
+  const [direction, setDirection] = useState("column");
 
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * 26);
@@ -128,10 +129,10 @@ function App() {
       </section>
       <section style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "24px", alignItems: "center" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "2px", alignItems: "center" }}>
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div style={{ display: "flex", flexDirection: direction, gap: "20px" }}>
             {
               myArray.map((item, index) => (
-                <div key={index} style={{ backgroundColor: item === "0" ? "red" : "grey", borderRadius: "50%", minHeight: "10px", minWidth: "10px" }}></div>
+                <div key={index} style={{ backgroundColor: item === "0" ? "red" : "", borderRadius: "50%", minHeight: "10px", minWidth: "10px" }}></div>
               ))
             }
           </div>
@@ -145,6 +146,10 @@ function App() {
           <button onClick={switchToLeft}>Left</button>
           <button onClick={switchToCenter}>Center</button>
           <button onClick={switchToRight}>Right</button>
+        </div>
+        <div style={{ display: "flex", gap: "8px", marginTop: "24px" }}>
+          <button onClick={() => setDirection("row")}>Set to horizontal</button>
+          <button onClick={() => setDirection("column")}>Set to vertical</button>
         </div>
       </section>
     </div>
