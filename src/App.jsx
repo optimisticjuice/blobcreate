@@ -148,8 +148,8 @@ function App() {
           <button onClick={switchToRight}>Right</button>
         </div>
         <div style={{ display: "flex", gap: "8px", marginTop: "24px" }}>
-          <button onClick={() => setDirection("row")}>Set to horizontal</button>
-          <button onClick={() => setDirection("column")}>Set to vertical</button>
+          <button onClick={() => setDirection("row")}>Set to Horizontal</button>
+          <button onClick={() => setDirection("column")}>Set to Vertical</button>
         </div>
       </section>
     </div>
