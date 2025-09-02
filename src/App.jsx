@@ -2,13 +2,13 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [madeup, setMadeup] = useState("madeup");
-  const [obj, setObject] = useState({name: "CoolGuy", 
-     age: 25,
-     email: "justcool@gmail.com",
-     password: "ItsASecret",
-     isAuthenticated : true
-    });
+  const [obj] = useState({
+    name: "CoolGuy",
+    age: 25,
+    email: "justcool@gmail.com",
+    password: "ItsASecret",
+    isAuthenticated: true,
+  });
   const [word, setWord] = useState("");
   const [count, setCount] = useState(0);
   const [value, setValue] = useState(1);
@@ -17,6 +17,23 @@ function App() {
   const [flip, setFlip] = useState(true);
   const [myArray, setMyArray] = useState(["", "", ""]);
   const [direction, setDirection] = useState("column");
+  const [profile] = useState({
+    // basic identity
+    name: "Alice",
+    // nested game statistics
+    stats: {
+      level: 7,
+      points: 1200,
+    },
+    // contact info with further nesting
+    contact: {
+      email: "alice@example.com",
+      social: {
+        twitter: "@alice",
+        github: "alicehub",
+      },
+    },
+  });
 
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * 26);
@@ -84,7 +101,25 @@ function App() {
   const switchToRight = () => {
     setMyArray(["", "", "0"]);
   }
-   
+
+  // recursively render a nested object as an unordered list
+  const renderNested = (o) => {
+    return (
+      <ul>
+        {Object.entries(o).map(([k, v]) => (
+          typeof v === "object" && v !== null ? (
+            <li key={k}>
+              {k}
+              {renderNested(v)}
+            </li>
+          ) : (
+            <li key={k}>{k}: {String(v)}</li>
+          )
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <div className="app">
       <header className="header">
@@ -109,10 +144,10 @@ function App() {
         <div className="row-left">
           <div className="btn-group">
             <button onClick={() => (flip ? setValue(value + 1) : setValue(value - 1))}>
-              {flip ? "Increment Value" : "Decrement Value"}
+              {flip ? "Increase Value" : "Decrease Value"}
             </button>
             <button onClick={() => (flip ? setValue(value - 1) : setValue(value + 1))}>
-              {flip ? "Decrement Value" : "Increment Value"}
+              {flip ? "Decrease Value" : "Increase Value"}
             </button>
           </div>
         </div>
@@ -164,6 +199,8 @@ function App() {
         <li key={key}>{key}: {value}</li>
       ))}
     </ul>
+    {/* display nested profile data below */}
+    {renderNested(profile)}
     </div>
   );
 }
