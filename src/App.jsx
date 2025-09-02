@@ -2,6 +2,13 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 function App() {
+  const [madeup, setMadeup] = useState("madeup");
+  const [obj, setObject] = useState({name: "CoolGuy", 
+     age: 25,
+     email: "justcool@gmail.com",
+     password: "ItsASecret",
+     isAuthenticated : true
+    });
   const [word, setWord] = useState("");
   const [count, setCount] = useState(0);
   const [value, setValue] = useState(1);
@@ -77,7 +84,7 @@ function App() {
   const switchToRight = () => {
     setMyArray(["", "", "0"]);
   }
-
+   
   return (
     <div className="app">
       <header className="header">
@@ -152,6 +159,11 @@ function App() {
           <button onClick={() => setDirection("column")}>Set to vertical</button>
         </div>
       </section>
+    <ul>
+      {Object.entries(obj).map(([key, value]) => (
+        <li key={key}>{key}: {value}</li>
+      ))}
+    </ul>
     </div>
   );
 }
